@@ -1,0 +1,1125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- SEO / EEAT Meta Tags -->
+  <title>Cardano Staking — Ouroboros, Delegation, Rewards, APY/APR, Wallets &amp; Troubleshooting (2026)</title>
+  <meta name="description" content="Cardano staking guide (2026): how Ouroboros proof-of-stake works, delegation mechanics, reward formula, epoch structure, multi-pool delegation, Voltaire governance staking, APY vs APR, wallet comparison, liquid staking, risks, and troubleshooting. Includes KPIs, runbook, and a deep FAQ.">
+  <meta name="author" content="Crypto Finance Experts">
+  <link rel="canonical" href="https://lido-cardano-staking.example.com/">
+
+  <link rel="icon" type="image/png" href="lido.staking.logo.png">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://lido-cardano-staking.example.com/">
+  <meta property="og:title" content="Cardano Staking — Ouroboros, Delegation, Rewards, APY/APR, Wallets &amp; Troubleshooting (2026)">
+  <meta property="og:description" content="Practical Cardano staking guide: Ouroboros mechanics, reward formula, epoch structure, multi-pool delegation, Voltaire governance, wallet comparison, and troubleshooting.">
+  <meta property="og:image" content="cover.png">
+
+  <!-- Twitter Card -->
+  <meta property="twitter:card" content="summary_large_image">
+  <meta property="twitter:url" content="https://lido-cardano-staking.example.com/">
+  <meta property="twitter:title" content="Cardano Staking — Ouroboros, Rewards, APY/APR, Governance &amp; Troubleshooting (2026)">
+  <meta property="twitter:description" content="How Cardano staking works: Ouroboros mechanics, reward formula, multi-pool delegation, Voltaire governance, and best practices in 2025–2026.">
+  <meta property="twitter:image" content="cover.png">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "Cardano Staking — Ouroboros, Delegation, Rewards, APY/APR, Wallets & Troubleshooting (2026)",
+    "description": "Comprehensive guide to Cardano staking: Ouroboros proof-of-stake, reward formula, epoch mechanics, multi-pool delegation, Voltaire governance, wallet comparison, and troubleshooting.",
+    "author": { "@type": "Organization", "name": "Crypto Finance Experts" },
+    "publisher": { "@type": "Organization", "name": "Crypto Finance Experts" },
+    "datePublished": "2026-01-01",
+    "dateModified": "2026-03-01"
+  }
+  </script>
+
+  <style>
+    :root{
+      /* Jade–Dark Teal Theme */
+      --primary:#0F766E;
+      --primary-600:#0D6E67;
+      --primary-700:#115E59;
+      --accent:#2DD4BF;
+
+      --ink:#F0FDFA;
+      --muted:#94A3B8;
+      --muted-2:#64748B;
+
+      --bg:#020E0D;
+      --panel:#041512;
+      --panel-2:#071C19;
+      --line:rgba(255,255,255,.08);
+
+      --ok:#34D399;
+      --warn:#F59E0B;
+      --error:#F87171;
+
+      --shadow:0 12px 32px rgba(0,0,0,.55);
+      --radius:14px;
+      --radius-sm:10px;
+      --radius-lg:20px;
+      --gap:1.25rem;
+      --gap-lg:2rem;
+    }
+
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family:system-ui,-apple-system,Segoe UI,Roboto,Inter,Arial,sans-serif;
+      color:var(--muted);
+      background:var(--bg);
+      line-height:1.65;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+    }
+
+    a{color:var(--accent);text-decoration:none}
+    a:hover{text-decoration:underline}
+    img{max-width:100%;height:auto;display:block}
+    .container{max-width:1100px;margin:0 auto;padding:0 1.25rem}
+
+    h1,h2,h3,h4{color:var(--ink);line-height:1.25;margin:0 0 .6rem}
+    h1{font-size:clamp(2rem,4.5vw,3.1rem);font-weight:800;letter-spacing:-.2px}
+    h2{font-size:clamp(1.35rem,2.8vw,2rem);margin-top:2.2rem;padding-top:.6rem;border-top:1px solid var(--line)}
+    h3{font-size:clamp(1.05rem,2.2vw,1.3rem);color:#99F6E4}
+
+    p,li,td,th{font-size:1rem}
+    .lead{font-size:1.125rem;color:#CCFBF1}
+    .muted{color:var(--muted)}
+    .muted-2{color:var(--muted-2)}
+
+    header.hero{padding:clamp(2rem,6vw,4rem) 0;border-bottom:1px solid var(--line)}
+    .hero-grid{display:grid;gap:var(--gap-lg);grid-template-columns:1fr;align-items:stretch}
+    .hero-card{
+      background:var(--panel);border:1px solid var(--line);
+      border-radius:var(--radius-lg);padding:clamp(1rem,3vw,1.75rem);box-shadow:var(--shadow);
+    }
+
+    .brand-row{display:flex;align-items:center;gap:.9rem;margin-bottom:.75rem}
+    .brand-logo{
+      width:54px;height:54px;border-radius:14px;border:1px solid var(--line);
+      background:rgba(15,118,110,.08);padding:.35rem;object-fit:contain;
+      box-shadow:0 6px 16px rgba(0,0,0,.30);flex:0 0 auto;
+    }
+
+    .cta{
+      display:inline-flex;align-items:center;gap:.5rem;
+      background:var(--primary);color:#fff;padding:1rem 2.5rem;border-radius:12px;
+      font-weight:800;font-size:1.05rem;letter-spacing:.2px;
+      box-shadow:0 10px 28px rgba(15,118,110,.32);border:1px solid rgba(255,255,255,.10);
+      transition:background .18s,transform .18s,box-shadow .18s;
+    }
+    .cta:hover{background:var(--primary-600);transform:translateY(-2px);box-shadow:0 16px 36px rgba(15,118,110,.44);text-decoration:none}
+
+    .note{
+      border-left:2px solid var(--accent);padding:.75rem 1rem;
+      background:rgba(15,118,110,.08);border-radius:0 10px 10px 0;color:#CCFBF1;
+    }
+
+    section.step-guide{padding:clamp(2rem,6vw,3.5rem) 0}
+    .steps{display:grid;gap:var(--gap);grid-template-columns:1fr}
+    .step{
+      background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);
+      padding:1.2rem;box-shadow:0 8px 20px rgba(0,0,0,.35);
+      transition:transform .2s ease,border-color .2s ease;
+    }
+    .step:hover{transform:translateY(-3px);border-color:rgba(45,212,191,.28)}
+    .step .icon{
+      width:48px;height:48px;border-radius:10px;display:inline-grid;place-items:center;
+      background:rgba(15,118,110,.14);margin-bottom:.6rem;color:#99F6E4;
+      font-weight:900;border:1px solid rgba(45,212,191,.20);
+    }
+
+    main .card{
+      background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);
+      padding:1.25rem;margin:1.25rem 0;box-shadow:0 8px 20px rgba(0,0,0,.35);
+    }
+
+    .grid-2{display:grid;gap:var(--gap);grid-template-columns:1fr}
+    .pillbar{display:flex;flex-wrap:wrap;gap:.6rem;margin:.75rem 0 0}
+    .pill{border:1px solid var(--line);background:rgba(15,118,110,.08);padding:.4rem .65rem;border-radius:999px;font-weight:700;color:#99F6E4}
+
+    .toc{border:1px solid var(--line);background:rgba(15,118,110,.04);border-radius:var(--radius);padding:1rem}
+    .toc strong{color:var(--ink)}
+    .toc ul{margin:.5rem 0 0;padding-left:1.1rem}
+    .toc li{margin:.25rem 0}
+    .toc a{font-weight:700;color:var(--accent)}
+
+    table{width:100%;border-collapse:collapse;overflow:hidden;border-radius:12px}
+    th,td{padding:.9rem;border-bottom:1px solid var(--line)}
+    th{background:rgba(15,118,110,.10);color:var(--ink);text-align:left}
+    tr.highlight{background:rgba(15,118,110,.06)}
+    tr:hover{background:rgba(255,255,255,.02)}
+
+    .ok{color:var(--ok)}.warn{color:var(--warn)}.err{color:var(--error)}
+
+    .eeat{
+      background:rgba(15,118,110,.04);border:1px solid var(--line);
+      border-radius:var(--radius);padding:1.25rem;box-shadow:0 8px 20px rgba(0,0,0,.35);
+    }
+
+    .faq-item{border-bottom:1px solid var(--line);padding:.9rem 0}
+    .faq-button{all:unset;display:flex;justify-content:space-between;align-items:center;width:100%;cursor:pointer;padding:.3rem 0}
+    .faq-button:focus-visible{outline:2px solid var(--accent)}
+    .faq-button h3{margin:0;font-weight:800}
+    .faq-content{max-height:0;overflow:hidden;transition:max-height .25s ease}
+    .faq-content.open{padding-top:.6rem}
+    .faq-plus{font-weight:900;color:var(--accent);font-size:1.2rem}
+
+    .cta-center{display:flex;justify-content:center;margin-top:1.25rem}
+
+    .badge-row{display:flex;flex-wrap:wrap;gap:.6rem;margin:.9rem 0 0}
+    .badge{border:1px solid rgba(45,212,191,.20);background:rgba(45,212,191,.06);padding:.35rem .6rem;border-radius:999px;font-weight:800;color:#99F6E4}
+
+    .callout-grid{display:grid;gap:var(--gap);grid-template-columns:1fr;margin-top:.75rem}
+    .mini{background:rgba(255,255,255,.025);border:1px solid var(--line);border-radius:var(--radius);padding:1rem}
+    .mini h3{margin-bottom:.35rem}
+    .kpi-badges{display:flex;flex-wrap:wrap;gap:.55rem;margin-top:.5rem}
+    .kpi-badges span{
+      border:1px solid rgba(15,118,110,.24);background:rgba(15,118,110,.10);
+      color:#99F6E4;padding:.3rem .55rem;border-radius:999px;font-weight:800;font-size:.9rem;
+    }
+
+    .src{
+      display:inline-flex;align-items:center;gap:.2rem;font-size:.78rem;font-weight:700;
+      color:var(--accent);border:1px solid rgba(45,212,191,.24);background:rgba(15,118,110,.08);
+      border-radius:5px;padding:.1rem .4rem;vertical-align:middle;white-space:nowrap;
+    }
+    .src:hover{background:rgba(45,212,191,.16);text-decoration:none}
+    .src::before{content:'↗ ';font-size:.7rem;opacity:.7}
+
+    /* reward formula display */
+    .formula-box{
+      background:rgba(15,118,110,.10);border:1px solid rgba(45,212,191,.18);
+      border-radius:var(--radius);padding:1rem 1.25rem;margin:.75rem 0;
+      font-family:'Courier New',Courier,monospace;font-size:.88rem;color:#99F6E4;
+      line-height:1.8;overflow-x:auto;
+    }
+    .formula-box .var{color:var(--accent);font-weight:700}
+    .formula-box .comment{color:var(--muted-2);font-style:italic;font-family:system-ui,sans-serif;font-size:.82rem}
+
+    /* wallet comparison cards */
+    .wallet-grid{display:grid;gap:.75rem;grid-template-columns:1fr;margin-top:.75rem}
+    .w-card{border:1px solid var(--line);background:rgba(15,118,110,.05);border-radius:var(--radius);padding:1rem}
+    .w-card h3{font-size:.95rem;margin-bottom:.4rem;color:var(--ink)}
+    .w-card p{font-size:.875rem;margin:0;color:var(--muted)}
+    .w-tag{display:inline-block;font-size:.72rem;font-weight:800;color:#99F6E4;background:rgba(15,118,110,.14);border:1px solid rgba(45,212,191,.22);border-radius:4px;padding:.12rem .4rem;margin-bottom:.4rem;letter-spacing:.3px;text-transform:uppercase}
+
+    @media(min-width:860px){
+      .steps{grid-template-columns:repeat(4,1fr)}
+      .grid-2{grid-template-columns:1fr 1fr}
+      .callout-grid{grid-template-columns:1fr 1fr}
+      .wallet-grid{grid-template-columns:repeat(3,1fr)}
+    }
+  </style>
+</head>
+
+<body>
+
+<header class="hero" role="banner">
+  <div class="container hero-grid">
+    <div class="hero-card" aria-label="Intro">
+      <div class="brand-row">
+        <img class="brand-logo" src="lido.staking.logo.png" alt="Lido Staking logo">
+        <div>
+          <div class="muted" style="font-weight:800;letter-spacing:.2px;">Operational Guide</div>
+          <div class="muted-2" style="font-size:.95rem;">Ouroboros PoS&nbsp;•&nbsp;Reward Formula&nbsp;•&nbsp;Multi-Pool Delegation&nbsp;•&nbsp;Voltaire Governance&nbsp;•&nbsp;APY/APR</div>
+        </div>
+      </div>
+
+      <h1>Cardano Staking</h1>
+      <p class="lead">
+        A practical, technically grounded guide to staking on Cardano: how Ouroboros
+        proof-of-stake works under the hood, how the reward formula determines your yield,
+        multi-pool delegation strategy, how Voltaire governance changes the staking picture,
+        how to compare <strong>APY vs APR</strong> across pools, and which wallet gives you the
+        best combination of features and security for managing your stake.
+      </p>
+
+      <div class="cta-center">
+        <a href="https://lido-staking.net/" class="cta" target="_blank" rel="noopener" aria-label="Explore staking options with Lido">
+          Explore Staking Options &nbsp;→
+        </a>
+      </div>
+
+      <div class="note" style="margin-top:1.25rem;">
+        <strong>Core distinction:</strong> This guide goes deeper than basic delegation — it covers
+        the Ouroboros reward formula, why pool pledge matters mathematically, how multi-pool
+        delegation works in practice, and how Cardano's Voltaire era changes governance
+        responsibilities for stakers. If you want the foundational delegation guide, see the
+        ADA Staking page.
+      </div>
+    </div>
+  </div>
+</header>
+
+<section class="step-guide" aria-labelledby="how-works">
+  <div class="container">
+    <h2 id="how-works">Cardano's Staking Architecture: End-to-End (Protocol → Pool → Delegator → Governance)</h2>
+    <div class="steps" role="list">
+      <article class="step" role="listitem">
+        <div class="icon">①</div>
+        <h3>Ouroboros selects slot leaders</h3>
+        <p>
+          Each 5-day epoch is divided into 432,000 one-second slots. For each slot, Ouroboros
+          uses a verifiable random function (VRF) to select a slot leader proportionally
+          to the pool's total delegated stake. More stake = more block production opportunities.
+        </p>
+      </article>
+      <article class="step" role="listitem">
+        <div class="icon">②</div>
+        <h3>Rewards enter the pot</h3>
+        <p>
+          Each epoch, transaction fees and a portion of the ADA reserve flow into a reward pot.
+          The pot is distributed to all pools proportional to their performance — blocks produced
+          vs blocks expected. Pool fees are deducted before delegator distribution.
+        </p>
+      </article>
+      <article class="step" role="listitem">
+        <div class="icon">③</div>
+        <h3>Delegators receive rewards</h3>
+        <p>
+          After pool fees, remaining rewards are distributed proportionally to delegators.
+          Rewards compound automatically into the delegated stake. No manual action needed.
+          Governance voting rights are activated alongside delegation.
+        </p>
+      </article>
+      <article class="step" role="listitem">
+        <div class="icon">④</div>
+        <h3>Governance participation (Voltaire)</h3>
+        <p>
+          In the Voltaire era, ADA holders must register as DReps (Delegated Representatives)
+          or delegate their voting power to a DRep to participate in on-chain governance.
+          Staking and governance are now linked — delegating stake without a DRep
+          may affect governance participation.
+        </p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<main class="container" role="main">
+
+  <section class="card toc" aria-label="Table of Contents">
+    <strong>On this page (Cardano Staking):</strong>
+    <ul>
+      <li><a href="#overview">Overview — Ouroboros and what makes Cardano's design unique</a></li>
+      <li><a href="#reward-formula">The reward formula: how yield is calculated mathematically</a></li>
+      <li><a href="#apy-apr">APY / APR: how to compare correctly across pools</a></li>
+      <li><a href="#how-to">How to stake: step-by-step with wallet selection</a></li>
+      <li><a href="#calculator">Calculator: net yield estimation framework</a></li>
+      <li><a href="#multi-pool">Multi-pool delegation: strategy and trade-offs</a></li>
+      <li><a href="#wallets">Wallet comparison: Eternl, Lace, Daedalus, Yoroi</a></li>
+      <li><a href="#voltaire">Voltaire governance: staking and DRep delegation</a></li>
+      <li><a href="#minimum">Minimum amount and cost structure</a></li>
+      <li><a href="#review">Review: legitimacy signals and what to watch</a></li>
+      <li><a href="#safety">Risks and rewards: what actually matters</a></li>
+      <li><a href="#comparison">Comparison: single-pool vs multi-pool vs liquid staking</a></li>
+      <li><a href="#best-practices">Best practices: high-impact operational rules</a></li>
+      <li><a href="#troubleshooting">Troubleshooting and common issues</a></li>
+      <li><a href="#eeat">Sources and references</a></li>
+      <li><a href="#faq">FAQ</a></li>
+    </ul>
+  </section>
+
+  <section class="card" id="overview">
+    <h2>Overview: Ouroboros and What Makes Cardano's Design Unique</h2>
+    <p>
+      Cardano runs on Ouroboros — a family of formally verified proof-of-stake protocols
+      developed by IOG (Input Output Global) and published as peer-reviewed academic research.
+      Ouroboros Praos is the currently deployed version, with Ouroboros Genesis and Leios
+      in active research and development.
+      The original Ouroboros paper is available at
+      <a href="https://iohk.io/en/research/library/papers/ouroboros-a-provably-secure-proof-of-stake-blockchain-protocol/" target="_blank" rel="noopener nofollow" class="src">IOG Research Library</a>.
+    </p>
+
+    <div class="pillbar" aria-label="Key topics">
+      <span class="pill">Ouroboros Praos</span>
+      <span class="pill">Pledge Influence</span>
+      <span class="pill">Multi-Pool Delegation</span>
+      <span class="pill">Voltaire Governance</span>
+      <span class="pill">DRep Delegation</span>
+      <span class="pill">Reward Formula</span>
+    </div>
+
+    <div class="callout-grid" role="list">
+      <div class="mini" role="listitem">
+        <h3>What makes Ouroboros formally verified</h3>
+        <p class="muted">
+          Unlike most PoS protocols that are designed empirically, Ouroboros has a formal
+          cryptographic security proof — mathematically demonstrating security properties
+          under defined assumptions. This academic foundation is published in peer-reviewed
+          venues. The protocol specification is maintained at
+          <a href="https://github.com/input-output-hk/ouroboros-network" target="_blank" rel="noopener nofollow" class="src">IOG GitHub — Ouroboros</a>.
+        </p>
+        <div class="kpi-badges">
+          <span>Formally verified</span><span>Peer-reviewed</span><span>Academic foundation</span>
+        </div>
+      </div>
+      <div class="mini" role="listitem">
+        <h3>How the Cardano staking era has evolved</h3>
+        <p class="muted">
+          Cardano launched delegation in the Shelley era (2020). Mary added multi-asset support.
+          Alonzo introduced smart contracts. Babbage improved Plutus V2.
+          The Voltaire era adds on-chain governance, DRep delegation, and treasury voting —
+          fundamentally expanding what staking means beyond yield to include governance rights.
+          Progress is tracked at
+          <a href="https://roadmap.cardano.org/" target="_blank" rel="noopener nofollow" class="src">roadmap.cardano.org</a>.
+        </p>
+        <div class="kpi-badges">
+          <span>Shelley → Voltaire</span><span>Governance rights</span><span>DRep system</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="note" style="margin-top:1rem;">
+      <strong>Key distinction from most PoS networks:</strong> Cardano's staking design is based on
+      formal economic incentive theory — the reward formula is not arbitrary but is derived from
+      game-theoretic principles designed to achieve a target number of pools (k-parameter),
+      reward pledge commitment, and discourage Sybil attacks. Understanding the formula
+      helps explain why certain pool configurations produce higher yields.
+    </div>
+  </section>
+
+  <section class="card" id="reward-formula">
+    <h2>The Reward Formula: How Yield Is Calculated Mathematically</h2>
+    <p>
+      Cardano's reward formula is formally specified and governs every epoch distribution.
+      Understanding it explains why pledge matters, why saturation reduces rewards,
+      and how pool fees compound over time. The full specification is in the
+      <a href="https://github.com/input-output-hk/cardano-ledger/releases/latest" target="_blank" rel="noopener nofollow" class="src">Cardano Ledger Specification</a>.
+    </p>
+
+    <div class="formula-box" aria-label="Cardano reward formula">
+      <span class="comment">// Simplified Cardano pool reward formula per epoch:</span><br><br>
+      <span class="var">R_pool</span> = (<span class="var">total_reward_pot</span> / (1 + <span class="var">a0</span>)) × (<span class="var">σ'</span> + (<span class="var">pledge'</span> × <span class="var">a0</span> × ((<span class="var">σ'</span> − <span class="var">pledge'</span> × ((<span class="var">z0</span> − <span class="var">σ'</span>) / <span class="var">z0</span>)) / <span class="var">z0</span>)))<br><br>
+      <span class="comment">// Where:</span><br>
+      <span class="var">a0</span>      = pledge influence factor (protocol parameter, currently 0.3)<br>
+      <span class="var">σ'</span>      = min(pool_stake / total_stake, z0) — capped at saturation point<br>
+      <span class="var">pledge'</span> = min(pool_pledge / total_stake, z0) — capped at saturation<br>
+      <span class="var">z0</span>      = 1/k = optimal pool size (k = 500, so z0 = 0.002 of total stake)
+    </div>
+
+    <h3>What this formula tells us in plain terms</h3>
+    <ul>
+      <li><strong>Pledge boosts pool rewards:</strong> the a0 parameter (currently 0.3) means pools with higher pledge relative to their total stake earn slightly more than pools with the same stake but lower pledge. This is a deliberate incentive for pool operators to commit their own ADA.</li>
+      <li><strong>Saturation hard-caps rewards:</strong> once a pool's stake reaches 1/k of total delegated ADA (~67M ADA with k=500), the σ' term is capped. Additional stake above saturation earns zero additional rewards — and existing delegators see their per-ADA yield decline.</li>
+      <li><strong>Pool size affects per-ADA yield for small pools:</strong> very small pools with insufficient stake to regularly produce blocks will have high variance — some epochs produce blocks (above-average rewards), some produce none (zero rewards).</li>
+      <li><strong>Fee structure reduces delegator yield:</strong> after pool rewards are calculated, the fixed cost (minimum 170 ADA/epoch) and margin are deducted before distribution to delegators.</li>
+    </ul>
+
+    <div class="note">
+      <strong>Practical implication:</strong> A pool with a higher pledge is mathematically rewarded
+      more than an identical pool with lower pledge. However, the pledge effect is relatively small
+      at current a0=0.3 — the dominant factors for delegator yield are pool performance (uptime),
+      fee structure (margin + fixed cost), and saturation level.
+    </div>
+  </section>
+
+  <section class="card" id="apy-apr">
+    <h2>APY / APR: How to Compare Across Pools Without Being Misled</h2>
+    <p>
+      Cardano's auto-compounding design means APY and effective APR are close —
+      but pool explorers display different metrics that must be understood correctly
+      to make an accurate comparison.
+    </p>
+
+    <table aria-label="APY vs APR for Cardano staking">
+      <thead>
+        <tr><th>Term</th><th>Cardano context</th><th>Where to find it</th></tr>
+      </thead>
+      <tbody>
+        <tr class="highlight">
+          <td>RoS (Return on Stake)</td>
+          <td>Per-epoch return as a percentage of delegated stake</td>
+          <td>ADApools.org and PoolTool — the most granular performance metric</td>
+        </tr>
+        <tr>
+          <td>Lifetime RoS</td>
+          <td>Average epoch return over the pool's entire history</td>
+          <td>The most reliable predictor of future performance — prioritise over recent RoS</td>
+        </tr>
+        <tr class="highlight">
+          <td>Net APY</td>
+          <td>Annual yield after pool margin and fixed fee</td>
+          <td>Calculated from lifetime RoS × 73 epochs per year; displayed on pool explorers</td>
+        </tr>
+        <tr>
+          <td>Luck %</td>
+          <td>Actual blocks produced vs statistically expected blocks</td>
+          <td>100% = as expected; above/below 100% is statistical variance, not performance quality for large pools</td>
+        </tr>
+        <tr class="highlight">
+          <td>Real yield</td>
+          <td>ADA APY adjusted for ADA/USD price movement</td>
+          <td>Dominates USD returns — model multiple ADA price scenarios, not just ADA-denominated APY</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="note">
+      <strong>Quick check:</strong> When comparing two pools, use <strong>lifetime net RoS</strong> —
+      not single-epoch RoS (too noisy for small pools) and not gross APY (ignores fees).
+      A pool with 95% of expected blocks produced over 200 epochs and a 1% margin
+      is more reliable than one with 100% luck over 10 epochs and a 0% margin.
+    </div>
+  </section>
+
+  <section class="card" id="how-to">
+    <h2>How to Stake on Cardano: Step-by-Step with Wallet Selection</h2>
+    <ol>
+      <li><strong>Choose and install a Cardano wallet:</strong> see the wallet comparison section below. For most users, Eternl (browser/mobile) or Lace (official IOG wallet) are the recommended starting points. Daedalus is the full-node option for maximum security. All three support delegation, multi-pool staking, and Voltaire governance.</li>
+      <li><strong>Generate your wallet and store the seed phrase securely:</strong> write it offline, in multiple copies, in physically separate locations. Never photograph or store digitally. For large ADA positions, use a hardware wallet (Ledger) — Cardano staking is fully supported.</li>
+      <li><strong>Fund your wallet:</strong> transfer ADA from an exchange. Keep at least 5 ADA for transaction fees and the 2 ADA staking key deposit.</li>
+      <li><strong>Research your pool using
+        <a href="https://cexplorer.io/" target="_blank" rel="noopener nofollow" class="src">Cexplorer.io</a>
+        or
+        <a href="https://adapools.org/" target="_blank" rel="noopener nofollow" class="src">ADApools.org</a>:</strong>
+        evaluate margin, fixed cost, pledge, saturation (&lt;80%), and lifetime RoS (&gt;95%).</li>
+      <li><strong>Register your staking key and delegate:</strong> in your wallet's delegation section, search by pool ticker or ID and confirm delegation. Costs: ~0.17 ADA fee + 2 ADA deposit (refundable).</li>
+      <li><strong>Set up DRep delegation (Voltaire):</strong> in supported wallets, delegate your governance voting power to a DRep of your choice or register as a DRep yourself. See the Voltaire section below.</li>
+      <li><strong>Monitor performance monthly:</strong> check epoch-by-epoch block production. Consider redelegating if lifetime RoS falls below 90% or fees change unexpectedly.</li>
+    </ol>
+
+    <div class="note">
+      <strong>Key principle:</strong> Cardano staking has two distinct parts in the Voltaire era:
+      staking for yield (pool delegation) and staking for governance (DRep delegation).
+      Both are managed from the same wallet but are separate registrations and serve different purposes.
+      A complete Cardano staking setup addresses both.
+    </div>
+  </section>
+
+  <section class="card" id="calculator">
+    <h2>Calculator: Net Yield Estimation Framework</h2>
+    <p>
+      Cardano's auto-compounding eliminates gas-drag on yield calculations —
+      but the reward formula's dependence on pool pledge and saturation means
+      accurate estimation requires more inputs than most networks.
+    </p>
+
+    <table aria-label="Cardano staking calculator inputs">
+      <thead>
+        <tr><th>Input</th><th>Meaning</th><th>Why it matters for Cardano specifically</th></tr>
+      </thead>
+      <tbody>
+        <tr class="highlight">
+          <td>ADA stake amount</td>
+          <td>Your delegated principal</td>
+          <td>Determines your share of pool rewards each epoch</td>
+        </tr>
+        <tr>
+          <td>Network gross APY</td>
+          <td>Current annual protocol reward rate (~3–5%)</td>
+          <td>Decreases gradually over time as the reserve depletes — check current rate at Cexplorer</td>
+        </tr>
+        <tr class="highlight">
+          <td>Pool margin %</td>
+          <td>Operator's percentage fee on pool rewards</td>
+          <td>Directly proportional impact on delegator yield — 2% margin reduces 5% gross APY to ~4.9%</td>
+        </tr>
+        <tr>
+          <td>Pool fixed cost (ADA/epoch)</td>
+          <td>Minimum fee before margin applies (minimum 170 ADA/epoch)</td>
+          <td>Shared among delegators — significant for small pools with few delegators</td>
+        </tr>
+        <tr class="highlight">
+          <td>Pool pledge amount (ADA)</td>
+          <td>Operator's own stake in the pool</td>
+          <td>Higher pledge gives a small mathematical reward boost via the a0 parameter (currently 0.3)</td>
+        </tr>
+        <tr>
+          <td>Pool lifetime performance %</td>
+          <td>Blocks produced vs expected over pool lifetime</td>
+          <td>Below 95% meaningfully reduces realized rewards — use lifetime, not recent performance</td>
+        </tr>
+        <tr class="highlight">
+          <td>Pool saturation %</td>
+          <td>Pool's stake as % of the k-parameter optimal size (~67M ADA)</td>
+          <td>Above 100% = reduced rewards; above 80% = worth monitoring closely</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="callout-grid">
+      <div class="mini">
+        <h3>Example: 50,000 ADA on a competitive pool</h3>
+        <p class="muted">Gross APY 4.5%. Pool: 1% margin, 170 ADA/epoch fixed, 98% performance, 40% saturation, 100,000 ADA pledge. Your fixed cost share: ~0.004 ADA/epoch (negligible). Net APY: ~4.45%. Annual yield: ~2,225 ADA. Auto-compounds every 5 days.</p>
+      </div>
+      <div class="mini">
+        <h3>Multi-pool delegation (same 50,000 ADA, 2 pools)</h3>
+        <p class="muted">Split 25,000 ADA across 2 pools with identical parameters. Outcome: same net APY (~4.45%) but improved variance smoothing — less likely to experience a zero-reward epoch. Useful for small pools where single-epoch variance is higher.</p>
+      </div>
+    </div>
+
+    <div class="note">
+      <strong>Cardano advantage:</strong> Unlike Ethereum (no compounding without gas),
+      Cosmos (gas per claim), or Polkadot (era-based claims), Cardano's rewards compound
+      automatically every epoch at zero cost. The net APY is therefore the realized APY
+      — no discount for compounding overhead.
+    </div>
+  </section>
+
+  <section class="card" id="multi-pool">
+    <h2>Multi-Pool Delegation: Strategy and Trade-offs</h2>
+    <p>
+      Since the Babbage era, Cardano wallets support delegating to multiple stake pools
+      simultaneously from a single wallet — each with a separate portion of your ADA.
+      This feature, available in Eternl and Lace, adds meaningful strategic options.
+      The technical implementation is documented in
+      <a href="https://developers.cardano.org/docs/stake-pool-course/" target="_blank" rel="noopener nofollow" class="src">Cardano Developer Portal</a>.
+    </p>
+
+    <div class="callout-grid">
+      <div class="mini">
+        <h3>Why multi-pool delegation helps</h3>
+        <p class="muted">
+          Small pools produce blocks probabilistically — a pool with 1M ADA stake in a network
+          with 25B ADA staked expects ~1 block every 25 epochs (125 days). In epochs where it
+          produces no block, delegators earn zero. Spreading stake across 2–3 small pools
+          reduces the chance of a completely empty epoch for your combined position.
+        </p>
+        <div class="kpi-badges"><span>Variance reduction</span><span>Multiple pools</span><span>Small pool support</span></div>
+      </div>
+      <div class="mini">
+        <h3>Trade-offs and costs</h3>
+        <p class="muted">
+          Each pool delegation requires a separate 2 ADA deposit and ~0.17 ADA transaction fee.
+          For 3 pools: ~6.51 ADA in deposits and fees. The deposit is refundable per pool.
+          Each additional pool also adds one more pool to monitor for performance and fee changes.
+          For very large stakes, spreading across 3–5 pools is practical; for smaller stakes
+          the overhead may not justify the variance benefit.
+        </p>
+        <div class="kpi-badges"><span>2 ADA per pool</span><span>More monitoring</span><span>Beneficial for small pools</span></div>
+      </div>
+    </div>
+
+    <div class="note">
+      <strong>Multi-pool strategy recommendation:</strong> Multi-pool delegation is most beneficial
+      when you specifically want to support small community pools while managing variance risk.
+      For large well-saturated pools with thousands of delegators, single-pool delegation
+      provides nearly identical variance characteristics without the additional deposit cost.
+    </div>
+  </section>
+
+  <section class="card" id="wallets">
+    <h2>Wallet Comparison: Eternl, Lace, Daedalus, and Yoroi</h2>
+    <p>
+      Your wallet choice affects staking features available to you — particularly
+      multi-pool delegation and Voltaire governance participation.
+      Official wallet security guidance is maintained by the Cardano Foundation at
+      <a href="https://cardanofoundation.org/" target="_blank" rel="noopener nofollow" class="src">cardanofoundation.org</a>.
+    </p>
+
+    <div class="wallet-grid" role="list">
+      <div class="w-card" role="listitem">
+        <span class="w-tag">Recommended</span>
+        <h3>Eternl</h3>
+        <p>Browser extension and mobile wallet. Supports multi-pool delegation, Voltaire DRep delegation, dApp connector, and hardware wallet (Ledger/Trezor). Most feature-rich option for active stakers. Actively developed. Available at eternl.io.</p>
+        <div class="kpi-badges" style="margin-top:.5rem"><span>Multi-pool</span><span>DRep support</span><span>Hardware wallet</span></div>
+      </div>
+      <div class="w-card" role="listitem">
+        <span class="w-tag">Official IOG</span>
+        <h3>Lace</h3>
+        <p>IOG's official wallet — browser extension and mobile. Full Voltaire governance support, clean UI, hardware wallet integration. Slightly fewer advanced features than Eternl but backed by the core Cardano development team. Available at lace.io.</p>
+        <div class="kpi-badges" style="margin-top:.5rem"><span>Official IOG</span><span>Voltaire support</span><span>Clean UI</span></div>
+      </div>
+      <div class="w-card" role="listitem">
+        <span class="w-tag">Full Node</span>
+        <h3>Daedalus</h3>
+        <p>Desktop full-node wallet — downloads the entire Cardano blockchain. Maximum trustlessness (no external API dependency), full staking features. Slow initial sync (hours). Not suitable for mobile or low-storage devices. Best for large long-term cold storage setups.</p>
+        <div class="kpi-badges" style="margin-top:.5rem"><span>Full node</span><span>Maximum trust</span><span>Desktop only</span></div>
+      </div>
+      <div class="w-card" role="listitem">
+        <span class="w-tag">Legacy</span>
+        <h3>Yoroi</h3>
+        <p>Browser extension and mobile wallet. Original light wallet by EMURGO. Less actively developed as of 2026 — basic staking supported but Voltaire governance and multi-pool features may be limited. Still functional; migration to Eternl or Lace recommended for new users.</p>
+        <div class="kpi-badges" style="margin-top:.5rem"><span>Basic staking</span><span>Legacy</span><span>Limited features</span></div>
+      </div>
+      <div class="w-card" role="listitem">
+        <span class="w-tag">Hardware</span>
+        <h3>Ledger (hardware)</h3>
+        <p>Cardano staking is fully supported on Ledger Nano S/X via the Cardano app. Connect Ledger to Eternl or Lace for the hardware wallet security model with full staking features. The most secure option for meaningful ADA positions.</p>
+        <div class="kpi-badges" style="margin-top:.5rem"><span>Cold key storage</span><span>Full staking</span><span>Use with Eternl/Lace</span></div>
+      </div>
+      <div class="w-card" role="listitem">
+        <span class="w-tag">Mobile</span>
+        <h3>Vespr</h3>
+        <p>Mobile-first Cardano wallet with growing staking feature set. Supports basic delegation and dApp connector. Newer entrant — verify current feature support for Voltaire governance before using as primary staking wallet.</p>
+        <div class="kpi-badges" style="margin-top:.5rem"><span>Mobile-first</span><span>dApp support</span><span>Newer entrant</span></div>
+      </div>
+    </div>
+
+    <div class="note">
+      <strong>Security rule for all wallets:</strong> Download wallet software exclusively from
+      the official developer's website or verified GitHub repository.
+      Fake Cardano wallet sites are an active attack vector — never use a wallet found
+      via search ads or links shared in social media or community channels.
+    </div>
+  </section>
+
+  <section class="card" id="voltaire">
+    <h2>Voltaire Governance: Staking and DRep Delegation</h2>
+    <p>
+      The Voltaire era introduces on-chain governance to Cardano — making staking about
+      more than yield. ADA holders now have direct governance rights, but exercising them
+      requires an additional delegation step: assigning your voting power to a DRep.
+      Governance documentation is maintained at
+      <a href="https://intersectmbo.org/" target="_blank" rel="noopener nofollow" class="src">Intersect MBO</a>
+      and the governance specification at
+      <a href="https://github.com/input-output-hk/cardano-ledger/blob/master/docs/adr/2022-12-01_001-voltaire-design.md" target="_blank" rel="noopener nofollow" class="src">Voltaire Design Document</a>.
+    </p>
+
+    <div class="grid-2">
+      <div class="mini">
+        <h3>What DRep delegation means</h3>
+        <p class="muted">
+          In Voltaire, every ADA holder can delegate their governance voting power to a
+          Delegated Representative (DRep) — an individual or entity that votes on governance
+          proposals on your behalf. You can also self-register as a DRep and vote directly.
+          Governance votes cover: protocol parameter changes, treasury withdrawals, hard fork initiations,
+          and constitutional amendments.
+        </p>
+        <div class="kpi-badges"><span>Protocol parameters</span><span>Treasury votes</span><span>Hard fork decisions</span></div>
+      </div>
+      <div class="mini">
+        <h3>How staking and governance interact</h3>
+        <p class="muted">
+          Your staking delegation (to a pool) and your governance delegation (to a DRep) are
+          independent registrations. Pool delegation earns yield — DRep delegation activates
+          governance rights. Both use the same ADA balance as voting weight.
+          ADA without a DRep delegation counts as "abstain" by default in Voltaire.
+        </p>
+        <div class="kpi-badges"><span>Independent from pool</span><span>Same ADA weight</span><span>Active participation</span></div>
+      </div>
+    </div>
+
+    <h3 style="margin-top:1rem;">How to set up DRep delegation</h3>
+    <ul>
+      <li>Open Eternl or Lace wallet — both have governance sections in the Voltaire era.</li>
+      <li>Browse active DReps registered on-chain. Review their stated voting philosophies and historical votes on <a href="https://gov.tools/" target="_blank" rel="noopener nofollow" class="src">gov.tools</a> — the official Cardano governance interface.</li>
+      <li>Delegate to a DRep whose governance philosophy aligns with yours, or self-register and vote directly on each proposal.</li>
+      <li>You can change your DRep delegation at any time, similar to changing a stake pool.</li>
+    </ul>
+
+    <div class="note">
+      <strong>Governance is a responsibility, not just a feature.</strong> In Voltaire, governance
+      proposals directly affect protocol parameters, inflation rates, and treasury spending —
+      all of which impact staking yield. Active governance participation (or careful DRep selection)
+      protects the long-term economics of your staking position.
+    </div>
+  </section>
+
+  <section class="card" id="minimum">
+    <h2>Minimum Amount and Cost Structure</h2>
+    <p>
+      Cardano has one of the lowest effective minimums for staking participation of any
+      major proof-of-stake network. All costs are explicitly defined in the protocol.
+    </p>
+    <ul>
+      <li><strong>Staking key deposit:</strong> 2 ADA, fully refundable on undelegation. Paid once per wallet staking key registration.</li>
+      <li><strong>Delegation transaction fee:</strong> approximately 0.17–0.18 ADA, non-refundable. Paid each time you delegate or redelegate.</li>
+      <li><strong>Governance key deposit:</strong> 0 ADA to delegate to a DRep; 500 ADA deposit to self-register as a DRep (refundable when deregistering).</li>
+      <li><strong>Pool fixed cost share:</strong> pools charge a minimum 170 ADA/epoch fixed fee shared proportionally among delegators. For a 1M ADA pool, your share on 1,000 ADA is 0.17 ADA/epoch (~0.0017% of stake per epoch — negligible).</li>
+      <li><strong>Practical wallet buffer:</strong> keep at least 5 ADA spendable outside your delegated stake for fees and future transactions.</li>
+    </ul>
+
+    <p>
+      The full cost model is documented in the
+      <a href="https://github.com/input-output-hk/cardano-ledger/releases/latest" target="_blank" rel="noopener nofollow" class="src">Cardano Ledger Specification</a>.
+      Staking on Cardano is economical at any ADA amount — even small positions earn proportionally.
+    </p>
+
+    <div class="note">
+      <strong>Cardano's accessibility advantage:</strong> The 2 ADA deposit is the only cost that
+      does not scale with position size. For a 100 ADA position, the deposit represents 2% of stake —
+      worth noting. For a 1,000 ADA position and above, all costs are negligible relative to yield.
+    </div>
+  </section>
+
+  <section class="card" id="review">
+    <h2>Legitimacy, Trust Signals, and What to Watch (2025–2026)</h2>
+    <p>
+      Evaluating Cardano staking legitimacy focuses on pool quality, wallet authenticity,
+      and DRep integrity — not protocol audit status, since the Ouroboros protocol itself
+      is formally verified and maintained by IOG. Independent network analytics are available at
+      <a href="https://cexplorer.io/" target="_blank" rel="noopener nofollow" class="src">Cexplorer.io</a>
+      and
+      <a href="https://api.cardanoscan.io/" target="_blank" rel="noopener nofollow" class="src">Cardanoscan API</a>.
+    </p>
+
+    <div class="callout-grid">
+      <div class="mini">
+        <h3>Pool legitimacy signals</h3>
+        <p class="muted">
+          Verifiable operator identity with consistent communication history.
+          Transparent fee structure with no unexplained changes.
+          Meaningful pledge amount demonstrating operator financial commitment.
+          Active on-chain governance voting via a disclosed DRep or direct votes.
+          Documented infrastructure and public contact channel.
+        </p>
+      </div>
+      <div class="mini">
+        <h3>Red flags and common threats</h3>
+        <p class="muted">
+          Fake wallet download sites are the primary attack vector — always verify wallet
+          software sources against official GitHub repositories or the Cardano Foundation's
+          official links. "Support agents" offering to fix delegation by requesting seed phrases.
+          Pools or DReps promising guaranteed high yields or governance outcomes.
+          0% margin with new pools from anonymous operators — evaluate sustainability carefully.
+        </p>
+      </div>
+    </div>
+
+    <div class="note">
+      <strong>DRep trust consideration (Voltaire):</strong> In the Voltaire era, your chosen DRep
+      votes on protocol changes that directly affect staking economics. Evaluate DRep track records
+      and stated positions before delegating governance power — treat it with the same seriousness
+      as pool selection. DRep voting history is publicly visible on
+      <a href="https://gov.tools/" target="_blank" rel="noopener nofollow" class="src">gov.tools</a>.
+    </div>
+  </section>
+
+  <section class="card" id="safety">
+    <h2>Risks and Rewards: What Actually Matters on Cardano</h2>
+    <p>
+      Cardano's staking design eliminates several risks present on other networks.
+      Understanding the remaining risks — and their relative importance — helps
+      allocate security effort correctly.
+    </p>
+
+    <table aria-label="Cardano staking risk factors">
+      <thead>
+        <tr><th>Risk</th><th>Impact on Cardano</th><th>Mitigation</th></tr>
+      </thead>
+      <tbody>
+        <tr class="highlight">
+          <td>Seed phrase / private key compromise</td>
+          <td class="err">Complete loss of all wallet funds — highest severity</td>
+          <td>Hardware wallet for large positions; offline seed storage; never enter phrase online</td>
+        </tr>
+        <tr>
+          <td>Phishing / fake wallet software</td>
+          <td class="err">Seed phrase stolen — complete loss</td>
+          <td>Download only from official developer sources verified against IOG GitHub</td>
+        </tr>
+        <tr class="highlight">
+          <td>Poor pool performance</td>
+          <td class="warn">Reduced rewards — principal completely unaffected</td>
+          <td>Monitor lifetime RoS monthly; redelegate if performance falls below 90%</td>
+        </tr>
+        <tr>
+          <td>Pool fee increases</td>
+          <td class="warn">Reduced net APY</td>
+          <td>Set fee change alerts on Cexplorer.io; redelegate promptly if margin increases significantly</td>
+        </tr>
+        <tr class="highlight">
+          <td>Pool over-saturation</td>
+          <td class="warn">Below-average rewards by design</td>
+          <td>Monitor saturation; redelegate to a pool below 80% saturation</td>
+        </tr>
+        <tr>
+          <td>Governance risk (Voltaire)</td>
+          <td class="warn">Unfavourable protocol changes via governance votes</td>
+          <td>Choose DRep carefully; monitor active proposals on gov.tools</td>
+        </tr>
+        <tr class="highlight">
+          <td>ADA price depreciation</td>
+          <td class="err">Real USD yield negative despite nominal ADA APY</td>
+          <td>Model USD scenarios; 4% ADA APY does not protect against USD depreciation of the asset</td>
+        </tr>
+        <tr>
+          <td>Slashing</td>
+          <td class="ok">Does not exist on Cardano — delegators cannot be slashed</td>
+          <td>N/A — unique Cardano safety property</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="note">
+      <strong>Cardano's unique risk profile:</strong> No slashing mechanism means pool errors cannot
+      reduce delegator principal — a property unique to Cardano among major PoS networks.
+      The practical risk profile for a careful Cardano delegator reduces to: seed phrase security
+      (your responsibility), pool performance monitoring (periodic effort), and ADA price risk
+      (inherent to any crypto asset). This is a comparatively clean risk profile.
+    </div>
+  </section>
+
+  <section class="card" id="comparison">
+    <h2>Comparison: Single-Pool vs Multi-Pool vs Liquid Staking</h2>
+    <p>
+      The right approach depends on your ADA amount, technical engagement level,
+      and whether you need ADA for DeFi applications simultaneously.
+    </p>
+
+    <table aria-label="Cardano staking approach comparison">
+      <thead>
+        <tr><th>Dimension</th><th>Single-pool delegation</th><th>Multi-pool delegation</th><th>Liquid staking (DeFi)</th></tr>
+      </thead>
+      <tbody>
+        <tr class="highlight">
+          <td>Reward variance</td>
+          <td>Normal — depends on pool size and luck</td>
+          <td class="ok">Lower — variance smoothed across pools</td>
+          <td>Depends on protocol design</td>
+        </tr>
+        <tr>
+          <td>Setup complexity</td>
+          <td class="ok">Low — one pool, one delegation</td>
+          <td>Medium — multiple pools, multiple deposits</td>
+          <td class="warn">Higher — DeFi protocol interaction required</td>
+        </tr>
+        <tr class="highlight">
+          <td>Monitoring effort</td>
+          <td class="ok">One pool to monitor</td>
+          <td class="warn">Multiple pools — proportionally more effort</td>
+          <td>Protocol-specific dashboard required</td>
+        </tr>
+        <tr>
+          <td>ADA availability</td>
+          <td class="ok">ADA in your wallet — spend any time</td>
+          <td class="ok">ADA in wallet — same flexibility</td>
+          <td class="warn">Smart contract custody — protocol-dependent</td>
+        </tr>
+        <tr class="highlight">
+          <td>DeFi composability</td>
+          <td class="warn">ADA not usable as DeFi collateral</td>
+          <td class="warn">ADA not usable as DeFi collateral</td>
+          <td class="ok">Liquid token usable as DeFi collateral</td>
+        </tr>
+        <tr>
+          <td>Smart contract risk</td>
+          <td class="ok">None for native delegation</td>
+          <td class="ok">None for native delegation</td>
+          <td class="err">Smart contract risk applies</td>
+        </tr>
+        <tr class="highlight">
+          <td>Initial cost (ADA)</td>
+          <td>~2.17 ADA (deposit + fee)</td>
+          <td>~2.17 ADA per pool</td>
+          <td>Protocol-specific</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="note">
+      <strong>Decision rule:</strong> For most ADA holders, single-pool delegation to a well-chosen
+      pool is the optimal approach — low effort, no smart contract risk, full governance rights,
+      and ADA remaining in your wallet. Multi-pool delegation makes sense for holders who specifically
+      want to support multiple community pools or reduce epoch variance on small-pool positions.
+      DeFi liquid staking on Cardano adds risk for a benefit (collateral use) that most holders
+      don't need.
+    </div>
+  </section>
+
+  <section class="card" id="best-practices">
+    <h2>Best Practices: High-Impact Operational Rules</h2>
+    <ul>
+      <li><strong>Download wallet software from official sources only:</strong> verify against
+        <a href="https://github.com/input-output-hk" target="_blank" rel="noopener nofollow" class="src">IOG's GitHub</a>
+        and official wallet developer sites. Fake Cardano wallet downloads are one of the most active phishing vectors.</li>
+      <li><strong>Use a hardware wallet for positions you consider significant:</strong> Ledger + Eternl or Lace provides the hardware key security model with full staking and governance functionality.</li>
+      <li><strong>Evaluate pools on lifetime RoS, not recent performance:</strong> a pool that produced 150% expected blocks last epoch is not necessarily better than one producing 98% over 200 epochs.</li>
+      <li><strong>Set up fee change alerts:</strong> use Cexplorer.io or ADApools.org to receive alerts when your pool changes its margin or fixed cost.</li>
+      <li><strong>Monitor saturation level quarterly:</strong> large pools can become over-saturated as total delegated ADA grows. Check your pool's saturation periodically and redelegate if it exceeds 90%.</li>
+      <li><strong>Redelegate frictionlessly:</strong> Cardano redelegation has no lock-up and no penalty. If a better pool option exists, switching is simple and risk-free.</li>
+      <li><strong>Complete your DRep delegation in Voltaire:</strong> leaving governance voting power unassigned counts as "abstain" — but actively choosing a DRep aligned with your values is a more meaningful participation in Cardano's long-term direction.</li>
+      <li><strong>Prefer single-pool operators over multi-pool operators (MPOs)</strong> to support Cardano's decentralisation. Large exchange-operated MPOs running dozens of pools create governance and block production concentration risk.</li>
+    </ul>
+
+    <div class="note">
+      <strong>Most common mistake:</strong> Delegating to the pool visible by default in a wallet's
+      "suggested pools" list without independent verification. Many of these are exchange-operated
+      pools near saturation levels. Always verify saturation, fees, and lifetime performance
+      independently on Cexplorer.io or ADApools.org before confirming delegation.
+    </div>
+  </section>
+
+  <section class="card" id="troubleshooting">
+    <h2>Troubleshooting: Common Issues, Root Causes, and Fixes</h2>
+
+    <h3>"My rewards are lower than expected this epoch"</h3>
+    <ul>
+      <li>Check your pool's block production for the relevant epoch on Cexplorer.io. Smaller pools can produce zero blocks in some epochs due to the probabilistic block selection — this is statistical variance, not a failure.</li>
+      <li>Verify your pool has not increased its margin or fixed cost — fee changes take effect from the next epoch boundary and directly reduce delegator yield.</li>
+      <li>Check if your pool's saturation level has increased above 100% — over-saturated pools pay reduced rewards to all delegators by protocol design.</li>
+    </ul>
+
+    <h3>"I cannot find my governance / DRep delegation option in my wallet"</h3>
+    <ul>
+      <li>Voltaire governance features are available in Eternl (1.12+) and Lace (1.10+). Ensure you have the most current version of your wallet installed.</li>
+      <li>Yoroi may not have Voltaire governance support — consider migrating to Eternl or Lace for full governance participation.</li>
+      <li>If the governance tab exists but shows no options, your wallet may need to download an updated blockchain state — allow the wallet to fully sync before trying again.</li>
+    </ul>
+
+    <h3>"My delegation shows as active but I haven't received rewards"</h3>
+    <ul>
+      <li>For first-time delegators: first rewards arrive approximately 15–20 days after initial delegation due to Cardano's epoch snapshot mechanics. This is expected behaviour, not an error.</li>
+      <li>Verify your delegation is confirmed on-chain at <a href="https://cexplorer.io/" target="_blank" rel="noopener nofollow" class="src">Cexplorer.io</a> — search your wallet address and check the staking section for active delegation status.</li>
+    </ul>
+
+    <h3>"My pool ticker is showing incorrectly or the pool appears to have disappeared"</h3>
+    <ul>
+      <li>Pool metadata (ticker, name, description) is stored off-chain and can occasionally fail to load. Verify the pool exists using its pool ID (not ticker) on Cexplorer.io — the pool ID is the stable identifier.</li>
+      <li>If a pool has retired, your delegation automatically becomes inactive. You will stop earning rewards — redelegate to an active pool as soon as possible.</li>
+    </ul>
+
+    <div class="note">
+      <strong>Best debugging method:</strong> Cexplorer.io and ADApools.org are the most comprehensive
+      on-chain data sources for Cardano staking state. Use your wallet address or pool ID (not ticker)
+      to look up delegation status, reward history, and pool performance directly on-chain.
+      Wallet UIs can occasionally display stale data — the block explorer is always authoritative.
+    </div>
+  </section>
+
+  <section class="eeat" id="eeat" aria-labelledby="eeat-title">
+    <h2 id="eeat-title">Authoritative Notes &amp; External References</h2>
+    <p>
+      Primary sources used throughout this guide. All links point to official IOG research,
+      Cardano protocol specifications, governance tooling, or established developer documentation.
+    </p>
+
+    <div class="grid-2">
+      <div>
+        <h3>Protocol Specs &amp; Research</h3>
+        <ul>
+          <li><a href="https://iohk.io/en/research/library/papers/ouroboros-a-provably-secure-proof-of-stake-blockchain-protocol/" target="_blank" rel="noopener nofollow">IOG Research — Ouroboros Original Paper</a></li>
+          <li><a href="https://github.com/input-output-hk/ouroboros-network" target="_blank" rel="noopener nofollow">IOG GitHub — Ouroboros Network Implementation</a></li>
+          <li><a href="https://github.com/input-output-hk/cardano-ledger/releases/latest" target="_blank" rel="noopener nofollow">Cardano Ledger Specification — Reward Formula</a></li>
+          <li><a href="https://developers.cardano.org/docs/stake-pool-course/" target="_blank" rel="noopener nofollow">Cardano Developer Portal — Staking Documentation</a></li>
+          <li><a href="https://roadmap.cardano.org/" target="_blank" rel="noopener nofollow">Cardano Roadmap — Voltaire &amp; Protocol Milestones</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3>Governance, Analytics &amp; Tools</h3>
+        <ul>
+          <li><a href="https://gov.tools/" target="_blank" rel="noopener nofollow">Gov.tools — Official Cardano Governance Interface</a></li>
+          <li><a href="https://intersectmbo.org/" target="_blank" rel="noopener nofollow">Intersect MBO — Cardano Governance Body</a></li>
+          <li><a href="https://cexplorer.io/" target="_blank" rel="noopener nofollow">Cexplorer.io — Cardano On-Chain Analytics &amp; Pool Data</a></li>
+          <li><a href="https://cardanofoundation.org/" target="_blank" rel="noopener nofollow">Cardano Foundation — Ecosystem &amp; Wallet Security</a></li>
+          <li><a href="https://github.com/input-output-hk" target="_blank" rel="noopener nofollow">IOG GitHub — Official Cardano Development Repository</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="note" style="margin-top:1rem;">
+      <strong>About:</strong> Prepared by Crypto Finance Experts as a practical SEO-oriented knowledge base covering
+      Cardano staking: Ouroboros proof-of-stake, reward formula and pledge influence,
+      multi-pool delegation, wallet comparison, Voltaire governance and DRep delegation,
+      APY/APR, safety, and troubleshooting.
+    </div>
+  </section>
+
+  <section class="card faq-section" aria-labelledby="faq">
+    <h2 id="faq">Cardano Staking: Frequently Asked Questions</h2>
+
+    <div class="faq-item">
+      <button class="faq-button" aria-expanded="false" aria-controls="f1" id="b1">
+        <h3>How does Cardano's Ouroboros proof-of-stake work?</h3><span class="faq-plus">+</span>
+      </button>
+      <div id="f1" class="faq-content" role="region" aria-labelledby="b1">
+        <p>Ouroboros is a formally verified PoS protocol developed by IOG with a cryptographic security proof published in peer-reviewed academic venues. Each 5-day epoch is divided into 432,000 one-second slots. For each slot, a verifiable random function (VRF) selects a slot leader (block producer) from the active stake pool set, with selection probability proportional to each pool's total delegated stake. The protocol has formal security proofs for common adversarial assumptions — distinguishing it from most empirically-designed PoS systems.</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-button" aria-expanded="false" aria-controls="f2" id="b2">
+        <h3>Why does pool pledge affect rewards?</h3><span class="faq-plus">+</span>
+      </button>
+      <div id="f2" class="faq-content" role="region" aria-labelledby="b2">
+        <p>Cardano's reward formula includes a pledge influence parameter (a0, currently 0.3) that gives pools with higher pledge a small mathematical reward boost relative to identical pools with lower pledge. This is a deliberate incentive mechanism to encourage pool operators to commit their own ADA — aligning operator and delegator interests. In practice, the a0 effect is relatively modest compared to pool performance and fee structure, but it meaningfully rewards operators who demonstrate financial commitment to their pool's success.</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-button" aria-expanded="false" aria-controls="f3" id="b3">
+        <h3>What is multi-pool delegation and should I use it?</h3><span class="faq-plus">+</span>
+      </button>
+      <div id="f3" class="faq-content" role="region" aria-labelledby="b3">
+        <p>Multi-pool delegation allows you to split your ADA stake across multiple pools simultaneously from a single wallet (available in Eternl and Lace). It is most beneficial when delegating to small community pools — spreading stake across 2–3 small pools reduces the chance of a zero-reward epoch caused by any single pool failing to produce a block. For large well-subscribed pools, single delegation provides similar variance characteristics without the additional 2 ADA deposit per extra pool.</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-button" aria-expanded="false" aria-controls="f4" id="b4">
+        <h3>What is a DRep and do I need to set one up?</h3><span class="faq-plus">+</span>
+      </button>
+      <div id="f4" class="faq-content" role="region" aria-labelledby="b4">
+        <p>A DRep (Delegated Representative) is an entity you assign your governance voting power to in Cardano's Voltaire era. ADA holders can either self-register as DReps and vote directly on governance proposals, or delegate their voting weight to a registered DRep who votes on their behalf. Governance proposals include protocol parameter changes, treasury spending, and hard fork decisions — all of which directly affect staking economics. While not mandatory, actively choosing a DRep is a meaningful participation in Cardano's governance process.</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-button" aria-expanded="false" aria-controls="f5" id="b5">
+        <h3>Which Cardano wallet is best for staking?</h3><span class="faq-plus">+</span>
+      </button>
+      <div id="f5" class="faq-content" role="region" aria-labelledby="b5">
+        <p>For most users, Eternl (browser/mobile) or Lace (IOG official, browser/mobile) are the recommended choices — both support multi-pool delegation, Voltaire DRep governance, hardware wallet integration, and dApp connectivity. Daedalus is the full-node option (maximum trustlessness, desktop only) suited to advanced users or large long-term holdings. Yoroi is functional but less actively developed as of 2026. For the highest security, pair any of these with a Ledger hardware wallet.</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-button" aria-expanded="false" aria-controls="f6" id="b6">
+        <h3>What APY can I realistically expect from staking ADA?</h3><span class="faq-plus">+</span>
+      </button>
+      <div id="f6" class="faq-content" role="region" aria-labelledby="b6">
+        <p>Cardano's current network-wide gross APY is approximately 3–5%, decreasing gradually as the ADA reserve depletes over time. A well-chosen pool with 0–2% margin, above 98% lifetime performance, and under 70% saturation will deliver net APY of approximately 3.5–4.8%. Rewards compound automatically every 5-day epoch at no gas cost. Real USD return depends entirely on ADA's price performance, which historically dominates the relatively stable staking yield component.</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-button" aria-expanded="false" aria-controls="f7" id="b7">
+        <h3>How does Cardano staking differ from Ethereum staking?</h3><span class="faq-plus">+</span>
+      </button>
+      <div id="f7" class="faq-content" role="region" aria-labelledby="b7">
+        <p>Key differences: Cardano requires no minimum (Ethereum solo staking requires 32 ETH). Cardano has no unbonding period (Ethereum has a variable exit queue). Cardano has no slashing of delegator principal (Ethereum validators can be slashed). Cardano rewards compound automatically every epoch (Ethereum requires active compounding via liquid staking or manual restaking). Cardano staking is simpler operationally — the primary decision is pool selection rather than validator or infrastructure management.</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-button" aria-expanded="false" aria-controls="f8" id="b8">
+        <h3>What is the reward formula and how does saturation work?</h3><span class="faq-plus">+</span>
+      </button>
+      <div id="f8" class="faq-content" role="region" aria-labelledby="b8">
+        <p>Cardano's reward formula (defined in the Ledger Specification) distributes epoch rewards proportionally to pool performance, with a pledge boost via the a0 parameter. The k-parameter (currently 500) sets the "optimal" pool count — each pool's ideal size is 1/500 of total delegated ADA (~67M ADA). Pools above this saturation point have their effective stake capped in the formula, reducing per-ADA rewards for all delegators. This deliberate design incentivises stake redistribution to smaller pools, supporting decentralisation.</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-button" aria-expanded="false" aria-controls="f9" id="b9">
+        <h3>Can I stake ADA and still use it in DeFi simultaneously?</h3><span class="faq-plus">+</span>
+      </button>
+      <div id="f9" class="faq-content" role="region" aria-labelledby="b9">
+        <p>Native delegation keeps ADA in your wallet — you can transact freely, but ADA used in DeFi protocols (collateral, liquidity provision) may not be included in the staking reward snapshot depending on how it is held. Some Cardano DeFi protocols issue liquid staking tokens that continue earning delegation rewards while being usable as DeFi collateral, but these add smart contract risk. For most holders, native delegation is the simpler approach — DeFi liquid staking is worth considering only if you specifically need ADA as DeFi collateral simultaneously.</p>
+      </div>
+    </div>
+
+  </section>
+
+</main>
+
+<footer class="container" role="contentinfo" style="padding:2rem 0;border-top:1px solid var(--line);margin-top:2rem">
+  <p class="muted">© 2026 Cardano Staking Guide. Educational content with safety-first operational focus. Not financial or investment advice.</p>
+</footer>
+
+<script>
+  document.querySelectorAll('.faq-button').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const open = btn.getAttribute('aria-expanded') === 'true';
+      const body = document.getElementById(btn.getAttribute('aria-controls'));
+      btn.setAttribute('aria-expanded', String(!open));
+      btn.querySelector('.faq-plus').textContent = open ? '+' : '−';
+      body.style.maxHeight = open ? '0' : body.scrollHeight + 'px';
+      body.classList.toggle('open', !open);
+    });
+  });
+</script>
+
+</body>
+</html>
